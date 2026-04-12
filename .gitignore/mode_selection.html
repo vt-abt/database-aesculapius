@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mode Selection - Second-Life Medical Records</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container" style="text-align: center;">
+        <h1>Welcome, {{ session['full_name'] }}</h1>
+        <p>Logged in as: <strong>{{ role|capitalize }}</strong></p>
+        
+        <div style="margin: 3rem 0;">
+            {% if role == 'admin' %}
+                <a href="/admin"><button>Go to Doctor Dashboard</button></a>
+            {% else %}
+                <a href="/patient"><button>Go to Patient Dashboard</button></a>
+            {% endif %}
+        </div>
+
+        <a href="/logout" style="color: #e74c3c; text-decoration: none;">Logout</a>
+    </div>
+</body>
+</html>

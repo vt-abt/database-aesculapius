@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>⚙️ System Administration</h1>
+        <a href="/logout"><button style="background: var(--danger);">Logout</button></a>
+    </div>
+
+    <div style="margin-top: 2rem;">
+        <h2>System-Wide User List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Full Name</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                <tr>
+                    <td>{{ u.id }}</td>
+                    <td>{{ u.full_name }}</td>
+                    <td>{{ u.username }}</td>
+                    <td>{{ u.role|capitalize }}</td>
+                    <td>
+                        <button style="padding: 2px 8px; background: var(--danger); font-size: 0.8rem;">Remove</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin-top: 3rem; background: #fff3cd; padding: 1.5rem; border-radius: 8px; border: 1px solid #ffeeba;">
+        <h3>🔑 Master Controls</h3>
+        <p>As an admin, you can see all system actors but not personal vitals (as per system policy).</p>
+        <p>Use the <strong>Live SQL Terminal</strong> at the bottom to perform complex data queries or manual overrides.</p>
+    </div>
+</div>
+{% endblock %}

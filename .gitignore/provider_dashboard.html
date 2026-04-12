@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>👨‍⚕️ Provider Dashboard (Dr. {{ session['full_name'] }})</h1>
+        <a href="/logout"><button style="background: var(--danger);">Logout</button></a>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+        
+        <!-- Left Column: Add Record -->
+        <section>
+            <h2>Add New Medical Entry</h2>
+            <form action="/add_record" method="POST">
+                <div class="form-group">
+                    <label>Patient</label>
+                    <select name="patient_id" required>
+                        {% for patient in patients %}
+                        <option value="{{ patient.id }}">{{ patient.full_name }} (Age: {{ patient.age }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Diagnosis</label>
+                    <textarea name="diagnosis" required placeholder="Traceable medical diagnosis..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>🔗 Correction/Update (Previous Record ID)</label>
+                    <input type="number" name="linked_record_id" placeholder="Optional ID for corrections">
+                    <small style="color: #666;">Leave blank if this is a fresh entry.</small>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label>BP (e.g., 120/80)</label>
+                        <input type="text" name="bp">
+                    </div>
+                    <div class="form-group">
+                        <label>Pulse (bpm)</label>
+                        <input type="number" name="pulse">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label>Temp (°C)</label>
+                        <input type="number" step="0.1" name="temp">
+                    </div>
+                    <div class="form-group">
+                        <label>Status Flag</label>
+                        <select name="status">
+                            <option value="Stable">Stable</option>
+                            <option value="Critical">Critical</option>
+                            <option value="Discharged">Discharged</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>ECG/Vital Notes</label>
+                    <input type="text" name="ecg">
+                </div>
+
+                <div class="form-group">
+                    <label>Medicines Prescribed</label>
+                    <textarea name="medicines"></textarea>
+                </div>
+
+                <button type="submit" style="width: 100%; background: var(--success);">Append Immutable Record</button>
+            </form>
+        </section>
+
+        <!-- Right Column: Patient List -->
+        <section>
+            <h2>Patients Under Your Care</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age/Sex</th>
+                        <th>Blood</th>
+                        <th>Wt/Ht</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in patients %}
+                    <tr>
+                        <td>{{ p.id }}</td>
+                        <td>{{ p.full_name }}</td>
+                        <td>{{ p.calculated_age }} / {{ p.sex }}</td>
+                        <td>{{ p.blood_group }}</td>
+                        <td>{{ p.weight }}kg / {{ p.height }}cm</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </div>
+</div>
+{% endblock %}

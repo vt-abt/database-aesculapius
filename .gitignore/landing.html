@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="text-align: center; margin-top: 3rem;">
+    <h1>Second-Life Medical Record System</h1>
+    <p>Please select your portal to continue</p>
+</div>
+
+<div class="landing-grid">
+    <!-- Patient Card -->
+    <div class="entry-card">
+        <h2>👤 Patient Portal</h2>
+        <p>Access your medical history, vitals, and update personal health details.</p>
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
+            <a href="/login/patient"><button style="width: 100%;">Patient Login</button></a>
+            <a href="/register" style="text-decoration: none; color: #3498db; font-size: 0.9rem;">No account? Sign up here</a>
+        </div>
+    </div>
+
+    <!-- Provider Card -->
+    <div class="entry-card">
+        <h2>👨‍⚕️ Provider Portal</h2>
+        <p>For medical professionals to manage patient records and status.</p>
+        <div style="margin-top: 40px;">
+            <a href="/login/provider"><button style="width: 100%;">Doctor Login</button></a>
+        </div>
+    </div>
+
+    <!-- Admin Card -->
+    <div class="entry-card">
+        <h2>⚙️ Admin Panel</h2>
+        <p>System-wide management and database-level control center.</p>
+        <div style="margin-top: 40px;">
+            <a href="/login/admin"><button style="width: 100%; background: #2c3e50;">Master Admin Access</button></a>
+        </div>
+    </div>
+</div>
+{% endblock %}

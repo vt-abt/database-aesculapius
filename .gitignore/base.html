@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Second-Life Medical Records</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="main-content">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div style="background: #3498db; color: white; padding: 10px; margin-bottom: 20px; border-radius: 5px;">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- STATIC LIVE TERMINAL -->
+    <div class="terminal-footer">
+        <div class="terminal-header">
+            <span>💻 LIVE SQL QUERY TERMINAL</span>
+            <span>SYSTEM STATUS: ONLINE</span>
+        </div>
+        <div id="terminal-content">
+            {% for log in logs %}
+                <span class="term-cmd">[{{ log.timestamp }}] {{ log.action }}:</span>
+                <span class="term-res">{{ log.executed_query }}</span>
+            {% endfor %}
+        </div>
+        <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 10px;">
+            <form action="/execute_sql" method="POST" style="display: flex; gap: 10px;">
+                <span style="color: #f1c40f;">mysql></span>
+                <input type="text" name="sql" placeholder="Execute raw SQL query directly..." 
+                       style="background: transparent; border: none; color: #00ff00; flex: 1; outline: none; font-family: monospace;">
+                <button type="submit" style="display: none;">Execute</button>
+            </form>
+            {% if sql_result %}
+                <div style="color: #00ff00; margin-top: 5px;">Result: {{ sql_result }}</div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

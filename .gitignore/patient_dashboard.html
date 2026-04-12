@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>👤 My Medical History</h1>
+        <a href="/logout"><button style="background: var(--danger);">Logout</button></a>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 350px 1fr; gap: 2rem; margin-top: 2rem;">
+        
+        <!-- Profile & Access Control -->
+        <aside>
+            <div style="background: #f9f9f9; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                <h3 style="margin-top:0;">Personal Profile</h3>
+                <p><strong>Name:</strong> {{ details.full_name }}</p>
+                <p><strong>Age:</strong> {{ details.calculated_age }}</p>
+                <p><strong>Blood Group:</strong> {{ details.blood_group }}</p>
+                <p><strong>Sex:</strong> {{ details.sex }}</p>
+                <p><strong>Weight:</strong> {{ details.weight }}kg</p>
+                <p><strong>Height:</strong> {{ details.height }}cm</p>
+            </div>
+
+            <div style="background: #e8f4fd; padding: 1.5rem; border-radius: 8px;">
+                <h3 style="margin-top:0;">🔐 Grant Access</h3>
+                <p style="font-size: 0.85rem;">Authorize a provider to view your history.</p>
+                <form action="/grant_consent" method="POST">
+                    <div class="form-group">
+                        <label>Provider</label>
+                        <select name="provider_id" required>
+                            {% for dr in providers %}
+                            <option value="{{ dr.id }}">Dr. {{ dr.full_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Expiry Date</label>
+                        <input type="date" name="expires_at" required>
+                    </div>
+                    <button type="submit" style="width: 100%;">Authorize Access</button>
+                </form>
+
+                <h4 style="margin-top: 1.5rem;">Active Consents</h4>
+                <ul style="padding-left: 20px; font-size: 0.85rem;">
+                    {% for c in consents %}
+                    <li>Dr. {{ c.full_name }} (Until {{ c.expires_at }})</li>
+                    {% endfor %}
+                    {% if not consents %}<li>No active authorizations.</li>{% endif %}
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Record List -->
+        <main>
+            <h2>My Health Records</h2>
+            {% for r in records %}
+            <div style="border: 1.5px solid #eee; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; background: #fff; position: relative;">
+                <span class="status-flag status-{{ r.patient_status }}" style="position: absolute; right: 20px; top: 20px;">
+                    {{ r.patient_status }}
+                </span>
+                
+                <h3 style="color: var(--accent); margin-top: 0;">{{ r.diagnosis }}</h3>
+                <p style="font-size: 0.85rem; color: #7f8c8d;">Consultation with Dr. {{ r.provider_name }} on {{ r.created_at }}</p>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem; border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 10px 0;">
+                    <div><strong>BP:</strong> {{ r.bp }}</div>
+                    <div><strong>Pulse:</strong> {{ r.pulse }} bpm</div>
+                    <div><strong>Temp:</strong> {{ r.temp }}°C</div>
+                    <div><strong>ECG:</strong> {{ r.ecg }}</div>
+                </div>
+
+                <div style="margin-top: 1rem;">
+                    <strong>Prescribed Medicines:</strong>
+                    <p>{{ r.medicines }}</p>
+                </div>
+            </div>
+            {% endfor %}
+            {% if not records %}
+            <p>No medical records found.</p>
+            {% endif %}
+        </main>
+    </div>
+</div>
+{% endblock %}
