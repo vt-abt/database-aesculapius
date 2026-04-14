@@ -1,29 +1,17 @@
-Got it — here’s a **complete, polished `README.md`** (ready-to-paste, no extra fluff, repo-quality):
+# PROJECT SECOND-LIFE: THE IMMUTABLE LEDGER
 
-````markdown
-# PROJECT SECOND-LIFE: THE IMMUTABLE LEDGER  
-**Database Systems Interface | Archive-7 | Zero-Trust Architecture**
+**DATABASE SYSTEMS INTERFACE | ARCHIVE-7 | ZERO-TRUST ARCHITECTURE**
 
----
-
-## Overview
-
-**Second-Life** is not a hospital application.  
-It is a **high-integrity vault for biological data**.
-
-Built on the principle of **absolute permanence**, it enforces deep-layer DBMS constraints to ensure:
-
-- Once a record enters the system → **it is permanent**
-- Modification → **impossible**
-- Deletion → **protocol violation**
+Second-Life is not a hospital application. It is a high-integrity vault for biological data. Built on the principle of absolute permanence, it utilizes deep-layer DBMS enforcement to ensure that once a record enters the system, it becomes a permanent part of the digital timeline. Modification is impossible. Deletion is a violation of protocol.
 
 ---
 
-## System Architecture: The Triad Perimeter
+## SYSTEM ARCHITECTURE: THE TRIAD PERIMETER
+
+The architecture is designed to compartmentalize risk and centralize truth within the MySQL engine.
 
 ```mermaid
 graph TD
-
     subgraph EXTERNAL_VOID [UNTRUSTED SPACE]
         User[THE SUBJECT]
     end
@@ -38,7 +26,7 @@ graph TD
         Trigger{STASIS SENTINELS}
         Check{BIOLOGICAL CONSTRAINTS}
         View[AUTHORIZED PERSPECTIVES]
-
+        
         subgraph LEDGER [PHYSICAL STORAGE]
             Records[(MEDICAL HISTORY)]
             Audit[(SEQUENTIAL LOGS)]
@@ -51,129 +39,53 @@ graph TD
     Check --> Records
     Records --> View
     Trigger -.->|INTERCEPT| Audit
-````
-
----
-
-## Core Directives
-
-### The Permanence Protocol (DBMS Layer)
-
-* **Stasis Triggers**
-
-  * `BEFORE UPDATE` and `BEFORE DELETE` triggers enforce immutability
-  * Any mutation attempt is aborted with SQLSTATE `45000`
-
-* **Biological Verification**
-
-  * Domain constraints ensure physiologically valid inputs
-  * Invalid data is rejected at the engine level
-
-* **Atomic Conversion**
-
-  * Patient discharge executes as an atomic transaction
-  * All provider access is revoked instantly upon completion
-
----
-
-### The Security Perimeter (Application Layer)
-
-* **Input Neutralization**
-
-  * All queries are parameterized
-  * System assumes all inputs are hostile
-
-* **Credential Fragmentation**
-
-  * Passwords are never stored directly
-  * Uses **Scrypt-based hashing** for high-entropy protection
-
-* **Forensic Auditing**
-
-  * Every SQL operation is logged sequentially
-  * Enables full post-incident reconstruction
-
----
-
-## Protocol Capabilities
-
-| Designation  | Access Rights | Data Interaction                                                 |
-| ------------ | ------------- | ---------------------------------------------------------------- |
-| **Subject**  | Patient       | Manage consent, view immutable history                           |
-| **Operator** | Provider      | Append records, link correction chains, view authorized subjects |
-| **Overseer** | Admin         | Full audit access, analytics, SQL override                       |
-
----
-
-## Evolutionary Protocols (Future Phase)
-
-* **Resource Encapsulation**
-
-  * PL/SQL-style packages for internal logic (e.g., pharmacy systems)
-
-* **Autonomous Risk Scoring**
-
-  * Stored functions generating health-risk coefficients from historical data
-
-* **Neural Interface**
-
-  * D3-based visualization of recovery trajectories
-  * Direct integration with active patient views
-
----
-
-## Tech Stack
-
-* **Database**: MySQL (Trigger-based immutability enforcement)
-* **Backend**: Python
-* **Security**: RBAC, Scrypt hashing, parameterized queries
-* **Architecture**: Zero-Trust, DB-centric enforcement
-
----
-
-## Initialization
-
-```bash
-# 1. Establish Schema
-mysql -u system_admin -p < database/schema.sql
-
-# 2. Define Perimeter
-export SECRET_KEY=0x_SECURE_VOID_KEY
-
-# 3. Execute Protocol
-python app.py
 ```
 
 ---
 
-## Design Philosophy
+## CORE DIRECTIVES
 
-* **Data > Application**
-* **Truth is append-only**
-* **Security is enforced at the lowest layer**
-* **The database is the system of record — not the API**
+### THE PERMANENCE PROTOCOL (DBMS LAYER)
+*   **STASIS TRIGGERS**: Custom BEFORE UPDATE and BEFORE DELETE sentinels are embedded directly into the schema. They monitor the medical tables with zero latency, aborting any attempt to alter the past with a 45000-state signal.
+*   **BIOLOGICAL VERIFICATION**: Every entry must survive the Domain Integrity check. Data points such as body temperature and pulse are bounded by strict physiological constraints. Out-of-bounds data is purged at the engine level before it can corrupt the ledger.
+*   **ATOMIC CONVERSION**: The discharge process is an atomic transaction. A patient's release triggers a simultaneous revocation of all active provider access, ensuring that temporal consent expires the moment physical presence ends.
 
----
-
-## System Status
-
-```
-STATUS: SYSTEM ONLINE
-DATA INTEGRITY: ABSOLUTE
-MODIFICATION: PROHIBITED
-```
+### THE SECURITY PERIMETER (APPLICATION LAYER)
+*   **INPUT NEUTRALIZATION**: 100% of the interface communicates via parameterized queries. The system assumes all incoming strings are hostile, neutralizing SQL injection vectors before they reach the execution buffer.
+*   **CREDENTIAL FRAGMENTATION**: We do not store passwords. We store high-entropy Scrypt fragments. Even in the event of a total database leak, the subjects' identities remain mathematically shielded.
+*   **FORENSIC AUDITING**: A sequential audit chain captures every raw SQL operation executed by the system. This log is a mirroring reflection of the database's activity, used for post-incident reconstruction.
 
 ---
 
-## License
+## PROTOCOL CAPABILITIES
 
-This project is developed for academic and research purposes under DBMS coursework. Licensing is under discussion due to aman being absent...?
+| DESIGNATION | ACCESS RIGHTS | DATA INTERACTION |
+| :--- | :--- | :--- |
+| SUBJECT | PATIENT | Manage temporal consent, view personal immutable history. |
+| OPERATOR | PROVIDER | Append to ledger, link correction chains, view authorized subjects. |
+| OVERSEER | ADMIN | Full system audit, workload analytics, direct SQL override. |
 
 ---
 
-## Author
+## EVOLUTIONARY PROTOCOLS (FUTURE PHASE)
 
-Developed as part of a **Database Systems Interface project**.
-Focus: **immutability, zero-trust architecture, and deep DBMS enforcement**.
+*   **RESOURCE ENCAPSULATION**: Implementation of PL/SQL-style Packages to encapsulate pharmacy inventory logic within the database kernel.
+*   **AUTONOMOUS RISK SCORING**: Stored functions designed to analyze historic vitals and output a singular health-risk coefficient without external processing.
+*   **NEURAL INTERFACE**: D3-driven visualization of recovery vectors, pulling directly from the Active Patient Views.
 
-```
+---
+
+## INITIALIZATION
+
+1.  **ESTABLISH SCHEMA**
+    mysql -u system_admin -p < database/schema.sql
+
+2.  **DEFINE PERIMETER**
+    export SECRET_KEY=0x_SECURE_VOID_KEY
+
+3.  **EXECUTE PROTOCOL**
+    python app.py
+
+---
+
+**STATUS: SYSTEM ONLINE | DATA INTEGRITY: ABSOLUTE | MODIFICATION: PROHIBITED**
